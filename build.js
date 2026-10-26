@@ -106,6 +106,7 @@ write('404.html', layout({ title: 'الصفحة غير موجودة', desc: 'ا�
 
 const urls = ['/', ...posts.map(p => `/posts/${p.meta.slug}/`)];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u, i) => `<url><loc>${BASE}${u}</loc>${i && posts[i - 1].meta.date ? `<lastmod>${posts[i - 1].meta.date}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`);
+write('CNAME', new URL(BASE).hostname + '\n');
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${BASE}/sitemap.xml\n`);
 write('rss.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${esc(cfg.name)}</title><link>${BASE}/</link><description>${esc(cfg.tagline)}</description><language>ar</language>\n${posts.slice(0, 30).map(({ meta }) => `<item><title>${esc(meta.title)}</title><link>${BASE}/posts/${meta.slug}/</link><guid>${BASE}/posts/${meta.slug}/</guid><pubDate>${new Date(meta.date).toUTCString()}</pubDate><description>${esc(meta.description)}</description></item>`).join('\n')}\n</channel></rss>\n`);
 if (cfg.gscVerification && /^google[\w-]+\.html$/.test(cfg.gscVerification)) write(cfg.gscVerification, 'google-site-verification: ' + cfg.gscVerification);
