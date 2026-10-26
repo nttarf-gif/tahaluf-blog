@@ -31,12 +31,13 @@ async function ask(user) {
   const r = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-    body: JSON.stringify({ model, max_tokens: 4096, system: SYSTEM, messages: [{ role: 'user', content: user }] }),
+    body: JSON.stringify({ model, max_tokens: 16000, system: SYSTEM, messages: [{ role: 'user', content: user }] }),
   });
   if (!r.ok) throw new Error(`API ${r.status}: ${await r.text()}`);
-  const txt = (await r.json()).content.map(c => c.text || '').join('');
+  const j = await r.json();
+  const txt = j.content.map(c => c.text || '').join('');
   const m = txt.match(/\{[\s\S]*\}/);
-  if (!m) throw new Error('no JSON in response');
+  if (!m) throw new Error(`no JSON in response (stop_reason=${j.stop_reason}, len=${txt.length}, head=${txt.slice(0, 120)})`);
   return JSON.parse(m[0]);
 }
 
@@ -74,4 +75,5 @@ function save(a, category) {
     });
   }
   if (failed) console.log(`${failed} article(s) failed`);
+  if (failed && failed >= nService + nGeneral) process.exit(1); // فشل الكل: أظهره في GitHub
 })();
