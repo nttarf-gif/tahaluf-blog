@@ -1,0 +1,8 @@
+[
+  {"id":"transport","name":"نقل المعدات والبضائع","url":"https://tahalufapp.com/for-contractors.html","about":"طلب نقل معدات ثقيلة أو بضائع بين المدن عبر تطبيق تحالف"},
+  {"id":"rental","name":"تأجير المعدات الثقيلة","url":"https://tahalufapp.com/for-equipment-owners.html","about":"تأجير كرين وحفار وشيول ومعدات أخرى، أو عرض معداتك للإيجار"},
+  {"id":"drivers","name":"انضم كسائق","url":"https://tahalufapp.com/for-drivers.html","about":"سائقو الشاحنات الراغبون بطلبات نقل إضافية"},
+  {"id":"customs","name":"نقل الحاويات لمخلصي الجمارك","url":"https://tahalufapp.com/for-customs-clearance.html","about":"نقل الحاويات من الميناء"},
+  {"id":"warehouses","name":"نقل وتوزيع للمستودعات","url":"https://tahalufapp.com/for-warehouses.html","about":"نقل وتوزيع للمستودعات والمتاجر"},
+  {"id":"carwash","name":"غسيل السيارات","url":"","about":"خدمة غسيل السيارات (ضع الرابط في url ليبدأ استخدامه)"}
+]
