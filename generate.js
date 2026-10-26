@@ -1,7 +1,7 @@
 // يكتب مقالات اليوم عبر Anthropic API.
 //  - SERVICE_COUNT مقالات من قائمة topics.json (خدمات تحالف مباشرة)
-//  - GENERAL_COUNT مقالات متنوعة من categories.json، يختار النموذج لها موضوعاً جديداً لم يُكتب
-// المتغيرات: ANTHROPIC_API_KEY (إلزامي) · ARTICLE_MODEL · SERVICE_COUNT (افتراضي 2) · GENERAL_COUNT (افتراضي 8)
+//  - GENERAL_COUNT مقالات متنوعة (ارفع الرقمين تدريجياً بعد أسبوعين) من categories.json، يختار النموذج لها موضوعاً جديداً لم يُكتب
+// المتغيرات: ANTHROPIC_API_KEY (إلزامي) · ARTICLE_MODEL · SERVICE_COUNT (افتراضي 1) · GENERAL_COUNT (افتراضي 3)
 const fs = require('fs'), path = require('path');
 const root = __dirname;
 const read = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
@@ -12,7 +12,7 @@ const existing = () => fs.readdirSync(dir).filter(f => f.endsWith('.md'));
 const key = process.env.ANTHROPIC_API_KEY;
 if (!key) { console.error('ANTHROPIC_API_KEY missing'); process.exit(1); }
 const model = process.env.ARTICLE_MODEL || 'claude-sonnet-5-5';
-const nService = +(process.env.SERVICE_COUNT ?? 2), nGeneral = +(process.env.GENERAL_COUNT ?? 8);
+const nService = +(process.env.SERVICE_COUNT ?? 1), nGeneral = +(process.env.GENERAL_COUNT ?? 3);
 const today = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10); // توقيت السعودية
 
 const svcText = ids => services.filter(s => ids.includes(s.id) && s.url)
