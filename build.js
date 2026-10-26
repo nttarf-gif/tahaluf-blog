@@ -46,7 +46,19 @@ main{max-width:900px;margin:-26px auto 40px;padding:0 16px}.card{background:#fff
 .card h2{margin:0 0 6px;font-size:21px}.card h2 a{text-decoration:none}.meta{color:var(--mute);font-size:13.5px}.tag{display:inline-block;background:#eaf1fb;color:var(--b);border-radius:20px;padding:1px 12px;font-size:13px;text-decoration:none}
 article h2{color:var(--b);font-size:23px;margin:26px 0 8px}article h3{font-size:18px;margin:18px 0 6px}article li{margin:6px 0}
 .cta{background:#fff7e6;border:1px solid #f5d38b;border-radius:16px;padding:18px;margin-top:26px;text-align:center}.btn{display:inline-block;padding:12px 24px;border-radius:12px;font-weight:700;text-decoration:none;margin:5px;background:var(--a);color:#fff}.btn.w{background:#25D366}
-footer{background:#0f1623;color:#c9d3e3;padding:26px 16px;text-align:center;font-size:14px}footer a{color:#fff}`;
+footer{background:#0f1623;color:#c9d3e3;padding:26px 16px;text-align:center;font-size:14px}footer a{color:#fff}
+.lead{display:grid;gap:10px;text-align:right;margin-top:12px}.lead input,.lead textarea{padding:12px;border:1px solid #cfd8e6;border-radius:10px;font:inherit;width:100%}.lead label{font-size:13px;line-height:1.6}.lead button{border:0;cursor:pointer;font:inherit;font-weight:700;padding:13px;border-radius:12px;background:var(--b);color:#fff}.lead button:disabled{opacity:.6}.lead .msg{font-size:14px;min-height:20px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}.links a{background:#eaf1fb;color:var(--b);border-radius:20px;padding:4px 14px;font-size:14px;text-decoration:none}
+.wafab{position:fixed;inset-inline-start:16px;bottom:16px;z-index:20;background:#25D366;color:#fff;border-radius:50px;padding:12px 18px;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #0003}`;
+
+const SERVICES = [['for-contractors', 'نقل المعدات والمواد للمقاولين'], ['for-engineers', 'خدمات المهندسين ومديري المشاريع'], ['for-customs-clearance', 'نقل الحاويات لمخلصي الجمارك'], ['for-markets-traders', 'نقل البضائع للأسواق والتجار'], ['for-warehouses', 'نقل المستودعات والتوزيع'], ['for-drivers', 'انضم كسائق'], ['for-equipment-owners', 'أجّر معداتك']];
+const CITIES = [['riyadh', 'الرياض'], ['jeddah', 'جدة'], ['dammam', 'الدمام والشرقية'], ['makkah', 'مكة'], ['madinah', 'المدينة'], ['qassim', 'القصيم'], ['tabuk', 'تبوك'], ['abha', 'أبها']];
+const utm = (u, campaign) => `${u}${u.includes('?') ? '&' : '?'}utm_source=blog&utm_medium=article&utm_campaign=${encodeURIComponent(campaign)}`;
+const svcLinks = campaign => SERVICES.map(([s, t]) => `<a href="${utm(`${cfg.mainSite}/${s}.html`, campaign)}">${esc(t)}</a>`).join('');
+const cityLinks = campaign => CITIES.map(([s, t]) => `<a href="${utm(`${cfg.mainSite}/transport-${s}.html`, campaign)}">نقل معدات ${esc(t)}</a><a href="${utm(`${cfg.mainSite}/rental-${s}.html`, campaign)}">تأجير معدات ${esc(t)}</a>`).join('');
+
+// يرسل الطلب إلى نفس دالة lead_submit التي يستخدمها موقع تحالف الرئيسي، فيصل الطلب إلى غرفة التحكم نفسها
+const FORM_JS = `(function(){var E=${JSON.stringify(cfg.leadEndpoint || '')},K=${JSON.stringify(cfg.leadKey || '')};document.querySelectorAll('form.lead').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector('button'),m=f.querySelector('.msg'),d=new FormData(f);b.disabled=true;m.textContent='جارٍ الإرسال…';fetch(E,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'},body:JSON.stringify({p_name:d.get('name'),p_phone:d.get('phone'),p_company:null,p_sector:'عام',p_city:d.get('city'),p_need:d.get('need'),p_source:'blog/article',p_campaign:f.dataset.slug||'blog',p_consent:!!d.get('consent'),p_email:null})}).then(function(r){return r.ok?null:r.json()}).then(function(er){if(er){m.textContent=er.message||'تعذّر الإرسال';b.disabled=false;return}m.textContent='✅ وصلنا طلبك وسنتواصل معك قريباً';f.reset();b.disabled=false}).catch(function(){m.textContent='تعذّر الإرسال، حاول لاحقاً';b.disabled=false})})})})();`;
 
 function layout({ title, desc, path: p, body, ld = [], type = 'website', h1, lead }) {
   const url = BASE + p;
@@ -67,6 +79,8 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <div class="top"><div class="in"><a href="${BASE}/"><b>${esc(cfg.name)}</b></a><nav><a href="${BASE}/">الرئيسية</a><a href="${cfg.mainSite}/">تطبيق تحالف</a></nav></div></div>
 <header class="hero"><h1>${esc(h1)}</h1>${lead ? `<p>${esc(lead)}</p>` : ''}</header>
 <main>${body}</main>
+<a class="wafab" href="https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent('السلام عليكم، أرغب بالاستفسار عن خدمات تحالف')}" aria-label="واتساب">💬 واتساب</a>
+<script>${FORM_JS}</script>
 <footer>© ${new Date().getFullYear()} ${esc(cfg.org)} · <a href="${cfg.mainSite}/">${cfg.mainSite.replace('https://', '')}</a> · <a href="${BASE}/rss.xml">RSS</a></footer>
 </body></html>`;
 }
@@ -79,7 +93,11 @@ posts.sort((a, b) => (b.meta.date || '').localeCompare(a.meta.date || ''));
 const orgLd = { '@type': 'Organization', name: cfg.org, url: cfg.mainSite, email: cfg.email, telephone: '+' + cfg.whatsapp };
 const wa = `https://wa.me/${cfg.whatsapp}`;
 
-const cta = `<div class="cta"><b>تحتاج نقل معدات أو تأجير معدات ثقيلة؟</b><br>اطلب عرض سعر عبر تطبيق تحالف أو تواصل معنا مباشرة.<br><a class="btn" href="${cfg.mainSite}/?utm_source=blog&utm_medium=article&utm_campaign=cta">افتح تطبيق تحالف</a><a class="btn w" href="${wa}">واتساب</a></div>`;
+const formHtml = slug => `<form class="lead" data-slug="${esc(slug)}"><input name="name" required placeholder="الاسم"><input name="phone" required inputmode="tel" placeholder="رقم الجوال (05xxxxxxxx)"><input name="city" placeholder="المدينة"><textarea name="need" rows="3" placeholder="ما الذي تحتاجه؟ (نقل معدات، تأجير كرين…)"></textarea><label><input type="checkbox" name="consent" required> أوافق على تواصل مؤسسة تحالف المتنقلة التجارية معي بخصوص خدماتها عبر الجوال، ويمكنني إلغاء الاشتراك في أي وقت.</label><button>اطلب عرض سعر</button><div class="msg" role="status"></div></form>`;
+const ctaFor = meta => {
+  const waText = `السلام عليكم، قرأت مقال «${meta.title}» وأرغب بعرض سعر`;
+  return `<div class="cta"><b>تحتاج نقل معدات أو تأجير معدات ثقيلة؟</b><br>اترك بياناتك ونتواصل معك بعرض سعر، أو راسلنا مباشرة على واتساب.${formHtml(meta.slug)}<a class="btn w" href="${wa}?text=${encodeURIComponent(waText)}">راسلنا على واتساب</a><a class="btn" href="${utm(cfg.mainSite + '/', meta.slug)}">افتح تطبيق تحالف</a><div class="links">${cityLinks(meta.slug)}</div></div>`;
+};
 
 for (const { meta, body } of posts) {
   const p = `/posts/${meta.slug}/`;
@@ -91,7 +109,7 @@ for (const { meta, body } of posts) {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
     itemListElement: [{ '@type': 'ListItem', position: 1, name: cfg.name, item: BASE + '/' }, { '@type': 'ListItem', position: 2, name: meta.title, item: BASE + p }],
   }];
-  const html = `<div class="card"><article><div class="meta">${esc(meta.date)} · <span class="tag">${esc(meta.category || 'عام')}</span></div>${md(body)}${cta}</article></div>
+  const html = `<div class="card"><article><div class="meta">${esc(meta.date)} · <span class="tag">${esc(meta.category || 'عام')}</span></div>${md(body)}${ctaFor(meta)}</article></div>
 <div class="card"><a href="${BASE}/">&larr; كل المقالات</a></div>`;
   write(p + 'index.html', layout({ title: meta.title, desc: meta.description, path: p, body: html, ld, type: 'article', h1: meta.title, lead: meta.description }));
 }
@@ -99,7 +117,7 @@ for (const { meta, body } of posts) {
 const list = posts.map(({ meta }) => `<div class="card"><div class="meta">${esc(meta.date)} · <span class="tag">${esc(meta.category || 'عام')}</span></div><h2><a href="${BASE}/posts/${meta.slug}/">${esc(meta.title)}</a></h2><p>${esc(meta.description)}</p></div>`).join('\n');
 write('index.html', layout({
   title: `${cfg.name} — ${cfg.tagline}`, desc: cfg.tagline + '. مقالات يومية عن نقل المعدات الثقيلة، تأجير الكرينات والحفارات، خدمات السائقين والمقاولين والمستودعات.',
-  path: '/', body: list || '<div class="card">قريبًا.</div>', h1: cfg.name, lead: cfg.tagline,
+  path: '/', body: `<div class="card"><h2>خدمات تحالف</h2><p>نقل المعدات والبضائع وتأجير المعدات الثقيلة في المملكة. اختر خدمتك أو مدينتك:</p><div class="links">${svcLinks('home')}</div><div class="links">${cityLinks('home')}</div>${formHtml('home')}</div>` + (list || '<div class="card">قريبًا.</div>'), h1: cfg.name, lead: cfg.tagline,
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: cfg.name, url: BASE + '/', inLanguage: 'ar', publisher: orgLd }],
 }));
 write('404.html', layout({ title: 'الصفحة غير موجودة', desc: 'الصفحة غير موجودة', path: '/404.html', body: `<div class="card"><a href="${BASE}/">العودة للمدونة</a></div>`, h1: 'الصفحة غير موجودة' }));

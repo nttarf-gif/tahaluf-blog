@@ -6,5 +6,7 @@
   "tagline": "أدلة عملية في نقل المعدات والبضائع وتأجير المعدات الثقيلة في المملكة",
   "whatsapp": "966555351406",
   "email": "nttarf@gmail.com",
+  "leadEndpoint": "https://rqfkmbshkcgouelkneec.supabase.co/rest/v1/rpc/lead_submit",
+  "leadKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJxZmttYnNoa2Nnb3VlbGtuZWVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NzQwNjQsImV4cCI6MjEwNjI1MDA2NH0.4BVogpBo9CcHqhs4Oen7wb_cUVcCuZuNB0FLP6BpxvI",
   "gscVerification": ""
 }
