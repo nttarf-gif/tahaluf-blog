@@ -48,5 +48,17 @@
 {"slug":"water-tanker-rental","topic":"تأجير صهاريج المياه للمشاريع: الاستخدامات والمتطلبات","category":"تأجير المعدات","keyword":"تأجير صهريج مياه"},
 {"slug":"customer-reviews-and-ratings-trust","topic":"لماذا تهم التقييمات والتوثيق عند اختيار ناقل أو مؤجر معدات","category":"عن تحالف","keyword":"تقييم الناقلين"},
 {"slug":"contract-checklist-transport","topic":"بنود لا تتجاهلها في عقد النقل أو تأجير المعدات","category":"نصائح للعملاء","keyword":"عقد نقل معدات"},
-{"slug":"seasonal-demand-transport","topic":"مواسم الطلب على النقل والتأجير في السعودية وكيف تخطط لها","category":"اتجاهات السوق","keyword":"مواسم الطلب على النقل"}
+{"slug":"seasonal-demand-transport","topic":"مواسم الطلب على النقل والتأجير في السعودية وكيف تخطط لها","category":"اتجاهات السوق","keyword":"مواسم الطلب على النقل"},
+{"slug":"remote-team-management-guide","topic":"كيف تدير فريق عمل عن بعد بنجاح: دليل عملي لأصحاب الأعمال","category":"العمل عن بعد","keyword":"إدارة فريق عن بعد","services":["remote"]},
+{"slug":"track-employee-attendance-remotely","topic":"كيف تتابع حضور الموظفين عن بعد دون أن تفقد الثقة","category":"العمل عن بعد","keyword":"متابعة حضور الموظفين عن بعد","services":["remote"]},
+{"slug":"remote-task-assignment-approval","topic":"كيف توزع المهام على موظفيك عن بعد وتعتمد الإنجاز بوضوح","category":"العمل عن بعد","keyword":"توزيع المهام عن بعد","services":["remote"]},
+{"slug":"remote-voice-meetings-vs-chat","topic":"الاجتماعات الصوتية أم الرسائل: متى يناسب كل منهما فريقك عن بعد","category":"العمل عن بعد","keyword":"اجتماعات الفريق عن بعد","services":["remote"]},
+{"slug":"remote-work-productivity-tips","topic":"عشر عادات ترفع إنتاجية الموظف الذي يعمل من المنزل","category":"العمل عن بعد","keyword":"إنتاجية العمل عن بعد","services":["remote"]},
+{"slug":"hire-freelancers-saudi","topic":"كيف تتعاقد مع عاملين مستقلين وتدير عملهم بأمان","category":"العمل عن بعد","keyword":"توظيف مستقلين","services":["remote"]},
+{"slug":"remote-work-for-small-business","topic":"هل يناسب العمل عن بعد مشروعك الصغير؟ مزايا وتحديات","category":"العمل عن بعد","keyword":"العمل عن بعد للمشاريع الصغيرة","services":["remote"]},
+{"slug":"screen-sharing-for-training-employees","topic":"مشاركة الشاشة في تدريب الموظفين الجدد عن بعد","category":"العمل عن بعد","keyword":"تدريب الموظفين عن بعد","services":["remote"]},
+{"slug":"remote-employee-performance-reports","topic":"كيف تقيّم أداء موظفيك عن بعد بتقارير واضحة وعادلة","category":"العمل عن بعد","keyword":"تقييم أداء الموظفين عن بعد","services":["remote"]},
+{"slug":"remote-work-mistakes-managers","topic":"أخطاء شائعة يقع فيها المدير عند إدارة موظفين عن بعد","category":"العمل عن بعد","keyword":"أخطاء إدارة الفريق عن بعد","services":["remote"]},
+{"slug":"choose-remote-work-platform","topic":"كيف تختار منصة لإدارة العمل عن بعد: معايير تسأل عنها قبل الاشتراك","category":"العمل عن بعد","keyword":"منصة إدارة العمل عن بعد","services":["remote"]},
+{"slug":"women-remote-work-opportunities","topic":"العمل عن بعد وفرص النساء في السعودية: كيف تبدأ صاحبة العمل أو الموظفة","category":"العمل عن بعد","keyword":"العمل عن بعد للنساء","services":["remote"]}
 ]

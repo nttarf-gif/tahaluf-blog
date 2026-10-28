@@ -59,7 +59,7 @@ function save(a, category) {
   const have = new Set(existing().map(f => f.replace(/\.md$/, '')));
   for (const t of topics.filter(t => !have.has(t.slug)).slice(0, nService)) {
     await run(async () => {
-      const a = await ask(`الموضوع: ${t.topic}\nالكلمة المفتاحية: ${t.keyword}\nروابط الخدمات المسموحة:\n${svcText(['transport', 'rental', 'drivers', 'customs', 'warehouses'])}`);
+      const a = await ask(`الموضوع: ${t.topic}\nالكلمة المفتاحية: ${t.keyword}\nروابط الخدمات المسموحة:\n${svcText(t.services || ['transport', 'rental', 'drivers', 'customs', 'warehouses'])}`);
       a.slug = t.slug; save(a, t.category);
     });
   }

@@ -117,7 +117,7 @@ for (const { meta, body } of posts) {
 const list = posts.map(({ meta }) => `<div class="card"><div class="meta">${esc(meta.date)} · <span class="tag">${esc(meta.category || 'عام')}</span></div><h2><a href="${BASE}/posts/${meta.slug}/">${esc(meta.title)}</a></h2><p>${esc(meta.description)}</p></div>`).join('\n');
 write('index.html', layout({
   title: `${cfg.name} — ${cfg.tagline}`, desc: cfg.tagline + '. مقالات يومية عن نقل المعدات الثقيلة، تأجير الكرينات والحفارات، خدمات السائقين والمقاولين والمستودعات.',
-  path: '/', body: `<div class="card"><h2>خدمات تحالف</h2><p>نقل المعدات والبضائع وتأجير المعدات الثقيلة في المملكة. اختر خدمتك أو مدينتك:</p><div class="links">${svcLinks('home')}</div><div class="links">${cityLinks('home')}</div>${formHtml('home')}</div>` + (list || '<div class="card">قريبًا.</div>'), h1: cfg.name, lead: cfg.tagline,
+  path: '/', body: `<div class="card"><h2>خدمات تحالف</h2><p>نقل المعدات والبضائع وتأجير المعدات الثقيلة في المملكة. اختر خدمتك أو مدينتك:</p><div class="links">${svcLinks('home')}</div><div class="links">${cityLinks('home')}</div><div class="links"><a href="https://remote-work-platform-ar.netlify.app/?utm_source=blog&utm_medium=home&utm_campaign=remote">منصة العمل الحر عن بعد: إدارة فريقك أونلاين</a></div>${formHtml('home')}</div>` + (list || '<div class="card">قريبًا.</div>'), h1: cfg.name, lead: cfg.tagline,
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: cfg.name, url: BASE + '/', inLanguage: 'ar', publisher: orgLd }],
 }));
 write('404.html', layout({ title: 'الصفحة غير موجودة', desc: 'الصفحة غير موجودة', path: '/404.html', body: `<div class="card"><a href="${BASE}/">العودة للمدونة</a></div>`, h1: 'الصفحة غير موجودة' }));
