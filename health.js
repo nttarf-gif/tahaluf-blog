@@ -51,5 +51,16 @@ const certDays = host => new Promise(res => { const s = tls.connect(443, host, {
   const out = ['# فحص صحة المنظومة — ' + today.toISOString().slice(0, 10), '', problems.length ? '## مشاكل تحتاج إصلاحاً' : '## كل شيء سليم', ...problems.map(p => '- ❌ ' + p), '', '## سليم', ...ok.map(p => '- ✅ ' + p)].join('\n');
   console.log(out);
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out + '\n');
-  if (problems.length) { console.error(`\n${problems.length} مشكلة`); process.exit(1); }
+  if (problems.length) {
+    // إيميل مفصّل بالمشاكل عبر Resend (اختياري): RESEND_API_KEY + ALERT_EMAIL، والمرسل ALERT_FROM (افتراضي notify@tahalufapp.com)
+    if (process.env.RESEND_API_KEY && process.env.ALERT_EMAIL) {
+      try {
+        const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+        const html = `<div dir="rtl" style="font-family:Tahoma,Arial,sans-serif;line-height:1.8"><h2>⚠️ تنبيه: ${problems.length} مشكلة تحتاج إصلاحاً</h2><ul>${problems.map(p => `<li>${esc(p)}</li>`).join('')}</ul><p>سيتكرر هذا التنبيه كل يومين حتى تُصلح.</p>${process.env.GITHUB_SERVER_URL ? `<p><a href="${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}">تفاصيل التشغيل</a></p>` : ''}</div>`;
+        const r = await get('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.RESEND_API_KEY, 'content-type': 'application/json' }, body: JSON.stringify({ from: process.env.ALERT_FROM || 'تنبيه تحالف <notify@tahalufapp.com>', to: [process.env.ALERT_EMAIL], subject: `⚠️ تحالف: ${problems.length} مشكلة في المنظومة`, html }) });
+        console.log(r.ok ? 'تم إرسال إيميل التنبيه' : `فشل إرسال إيميل التنبيه: ${r.status} ${(await r.text()).slice(0, 160)}`);
+      } catch (e) { console.error('تعذّر إرسال إيميل التنبيه: ' + e.message); }
+    }
+    console.error(`\n${problems.length} مشكلة`); process.exit(1);
+  }
 })();
