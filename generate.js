@@ -12,7 +12,7 @@ const existing = () => fs.readdirSync(dir).filter(f => f.endsWith('.md'));
 const key = process.env.ANTHROPIC_API_KEY;
 if (!key) { console.error('ANTHROPIC_API_KEY missing'); process.exit(1); }
 const model = process.env.ARTICLE_MODEL || 'claude-haiku-5-5';
-const nService = +(process.env.SERVICE_COUNT ?? 1), nGeneral = +(process.env.GENERAL_COUNT ?? 3);
+const nService = +(process.env.SERVICE_COUNT ?? 2), nGeneral = +(process.env.GENERAL_COUNT ?? 3);
 const today = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10); // توقيت السعودية
 
 const svcText = ids => services.filter(s => ids.includes(s.id) && s.url)
@@ -58,13 +58,19 @@ function save(a, category) {
 
   // 1) مقالات الخدمات المباشرة
   const have = new Set(existing().map(f => f.replace(/\.md$/, '')));
-  // يوم للخدمات الأساسية ويوم لمنصة العمل عن بعد، حتى تأخذ المنصة حصتها دون انتظار بقية القائمة
+  // تدوير بين الخدمات الأساسية ومنصة العمل عن بعد والورشة وكوفيرة، حتى تأخذ كل منصة حصتها دون انتظار بقية القائمة
   const pending = topics.filter(t => !have.has(t.slug));
-  const remoteDay = Math.floor(Date.now() / 864e5) % 2 === 0;
-  const pick = [...pending.filter(t => !!t.services === remoteDay), ...pending.filter(t => !!t.services !== remoteDay)];
-  for (const t of pick.slice(0, nService)) {
+  const groupOf = t => (t.services ? t.services[0] : 'core');
+  const groups = ['core', 'remote', 'workshop', 'kovera'];
+  const dayNo = Math.floor(Date.now() / 864e5), pick = [];
+  for (let i = 0; i < nService; i++) {
+    const left = pending.filter(t => !pick.includes(t));
+    const t = left.find(x => groupOf(x) === groups[(dayNo * nService + i) % groups.length]) || left[0];
+    if (t) pick.push(t);
+  }
+  for (const t of pick) {
     await run(async () => {
-      const a = await ask(`الموضوع: ${t.topic}\nالكلمة المفتاحية: ${t.keyword}\nروابط الخدمات المسموحة:\n${svcText(t.services || ['transport', 'rental', 'drivers', 'customs', 'warehouses'])}`);
+      const a = await ask(`الموضوع: ${t.topic}\nالكلمة المفتاحية: ${t.keyword}\nروابط الخدمات المسموحة:\n${svcText(t.services || ['transport', 'rental', 'drivers', 'customs', 'warehouses'])}${t.link ? `\n- صفحة المدينة المخصصة لهذا المقال: ${t.link}` : ''}`);
       a.slug = t.slug; save(a, t.category);
     });
   }
