@@ -1,0 +1,19 @@
+name: health-check
+
+# every 2 days; a failed run means something is broken or expiring, so GitHub emails the owner
+on:
+  schedule:
+    - cron: '30 6 */2 * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node health.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
