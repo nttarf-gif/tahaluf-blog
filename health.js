@@ -46,6 +46,8 @@ const certDays = host => new Promise(res => { const s = tls.connect(443, host, {
     } catch (e) { bad('تعذّر فحص مفتاح Anthropic: ' + e.message); }
   }
 
+  if (process.env.TEST_ALERT === 'true') bad('تنبيه تجريبي: هذه رسالة اختبار لقناة الإيميل ولا توجد مشكلة حقيقية');
+
   for (const [due, msg, before] of REMINDERS) { const left = day(due) - now; if (left <= before) bad(`${msg} — ${left >= 0 ? `بعد ${left} يوم` : `مضى ${-left} يوم`} (${due})`); }
 
   const out = ['# فحص صحة المنظومة — ' + today.toISOString().slice(0, 10), '', problems.length ? '## مشاكل تحتاج إصلاحاً' : '## كل شيء سليم', ...problems.map(p => '- ❌ ' + p), '', '## سليم', ...ok.map(p => '- ✅ ' + p)].join('\n');
