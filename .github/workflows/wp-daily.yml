@@ -1,0 +1,22 @@
+name: wp-daily
+
+# publishes 2 articles a day to almtngl-ksa.com through the WordPress REST API
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch: { inputs: { dry_run: { type: boolean, default: false } } }
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node wp-publish.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
