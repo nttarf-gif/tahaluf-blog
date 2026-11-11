@@ -19,8 +19,15 @@ const SITES = [
   ['https://kovera.tahalufapp.com/', 'كوفيرة بيتي'],
   ['https://kovera.tahalufapp.com/home-coiffeuse-riyadh.html', 'صفحة مدينة (كوفيرة)'],
   ['https://tahalufapp.com/', 'موقع تحالف الرئيسي'],
+  ['https://almtngl-ksa.com/', 'موقع المتنقل (ووردبريس)'],
+  ['https://mtnqel.com/', 'المتنقل للنظافة'],
+  ['https://fadfadah.mtnqel.com/', 'فضفضه'],
+  ['https://mouthaqsa.com/', 'موثّق'],
+  ['https://souqalharaj1.com/', 'سوق الحراج اليمني'],
+  ['http://mawaeed-almustashfa.netlify.app/', 'مواعيد المستشفى'],
+  ['http://lamma-app-514.netlify.app/', 'لمّة (ضيافة وهدايا)'],
 ];
-const SITEMAPS = ['https://blog.tahalufapp.com/sitemap.xml', 'https://remote.tahalufapp.com/sitemap.xml', 'https://workshop.tahalufapp.com/sitemap.xml', 'https://kovera.tahalufapp.com/sitemap.xml'];
+const SITEMAPS = ['https://blog.tahalufapp.com/sitemap.xml', 'https://remote.tahalufapp.com/sitemap.xml', 'https://workshop.tahalufapp.com/sitemap.xml', 'https://kovera.tahalufapp.com/sitemap.xml', 'https://almtngl-ksa.com/sitemap_index.xml', 'https://mtnqel.com/sitemap.xml', 'https://fadfadah.mtnqel.com/sitemap.xml', 'https://mouthaqsa.com/sitemap.xml', 'https://souqalharaj1.com/sitemap.xml', 'http://mawaeed-almustashfa.netlify.app/sitemap.xml'];
 
 const get = async (u, init) => { const c = new AbortController(), t = setTimeout(() => c.abort(), 25000); try { return await fetch(u, { ...init, signal: c.signal, redirect: 'follow' }); } finally { clearTimeout(t); } };
 const certDays = host => new Promise(res => { const s = tls.connect(443, host, { servername: host, timeout: 15000 }, () => { const c = s.getPeerCertificate(); s.end(); res(c && c.valid_to ? Math.floor((Date.parse(c.valid_to) - Date.now()) / 864e5) : null); }); s.on('error', () => res(null)); s.on('timeout', () => { s.destroy(); res(null); }); });
