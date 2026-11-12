@@ -12,7 +12,7 @@ const existing = () => fs.readdirSync(dir).filter(f => f.endsWith('.md'));
 const key = process.env.ANTHROPIC_API_KEY;
 if (!key) { console.error('ANTHROPIC_API_KEY missing'); process.exit(1); }
 const model = process.env.ARTICLE_MODEL || 'claude-haiku-5-5';
-const nService = +(process.env.SERVICE_COUNT ?? 2), nGeneral = +(process.env.GENERAL_COUNT ?? 3);
+const nService = +(process.env.SERVICE_COUNT ?? 3), nGeneral = +(process.env.GENERAL_COUNT ?? 3);
 const today = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10); // توقيت السعودية
 
 const svcText = ids => services.filter(s => ids.includes(s.id) && s.url)
