@@ -1,4 +1,4 @@
-// فحص صحة المنظومة: يفشل (exit 1) إذا تعطل شيء أو اقترب موعد انتهاء شيء، فيصلك إيميل GitHub عن فشل التشغيل.
+﻿// فحص صحة المنظومة: يفشل (exit 1) إذا تعطل شيء أو اقترب موعد انتهاء شيء، فيصلك إيميل GitHub عن فشل التشغيل.
 // يعمل كل يومين من .github/workflows/health.yml حتى يُصلح العطل. المتغيرات: ANTHROPIC_API_KEY (اختياري)
 const fs = require('fs'), path = require('path'), tls = require('tls');
 const problems = [], ok = [];
@@ -26,6 +26,7 @@ const SITES = [
   ['https://souqalharaj1.com/', 'سوق الحراج اليمني'],
   ['http://mawaeed-almustashfa.netlify.app/', 'مواعيد المستشفى'],
   ['http://lamma-app-514.netlify.app/', 'لمّة (ضيافة وهدايا)'],
+  ['https://laqta.tahalufapp.com/', 'عروض لقطة يومياً'],
 ];
 const SITEMAPS = ['https://blog.tahalufapp.com/sitemap.xml', 'https://remote.tahalufapp.com/sitemap.xml', 'https://workshop.tahalufapp.com/sitemap.xml', 'https://kovera.tahalufapp.com/sitemap.xml', 'https://almtngl-ksa.com/sitemap_index.xml', 'https://mtnqel.com/sitemap.xml', 'https://fadfadah.mtnqel.com/sitemap.xml', 'https://mouthaqsa.com/sitemap.xml', 'https://souqalharaj1.com/sitemap.xml', 'http://mawaeed-almustashfa.netlify.app/sitemap.xml'];
 
