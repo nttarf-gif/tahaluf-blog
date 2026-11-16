@@ -81,7 +81,7 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <main>${body}</main>
 <a class="wafab" href="https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent('السلام عليكم، أرغب بالاستفسار عن خدمات تحالف')}" aria-label="واتساب">💬 واتساب</a>
 <script>${FORM_JS}</script>
-<footer>© ${new Date().getFullYear()} ${esc(cfg.org)} · <a href="${cfg.mainSite}/">${cfg.mainSite.replace('https://', '')}</a> · <a href="${BASE}/rss.xml">RSS</a></footer>
+<footer>© ${new Date().getFullYear()} ${esc(cfg.legalName || cfg.org)} · <a href="${cfg.mainSite}/">${cfg.mainSite.replace('https://', '')}</a> · <a href="${BASE}/rss.xml">RSS</a>${cfg.cr ? `<br><span style="font-size:12px;opacity:.85">السجل التجاري ${esc(cfg.cr)}${cfg.ecommerceCert ? ` · شهادة توثيق التجارة الإلكترونية ${esc(cfg.ecommerceCert)}` : ''} · ${esc(cfg.contactEmail || cfg.email)} · <a href="https://wa.me/${cfg.whatsapp}">واتساب</a><br>تحالف منصة تربط العملاء بأصحاب الناقلات والمعدات.</span>` : ''}</footer>
 </body></html>`;
 }
 
