@@ -60,6 +60,9 @@ const cityLinks = campaign => CITIES.map(([s, t]) => `<a href="${utm(`${cfg.main
 // يرسل الطلب إلى نفس دالة lead_submit التي يستخدمها موقع تحالف الرئيسي، فيصل الطلب إلى غرفة التحكم نفسها
 const FORM_JS = `(function(){var E=${JSON.stringify(cfg.leadEndpoint || '')},K=${JSON.stringify(cfg.leadKey || '')};document.querySelectorAll('form.lead').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector('button'),m=f.querySelector('.msg'),d=new FormData(f);b.disabled=true;m.textContent='جارٍ الإرسال…';fetch(E,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'},body:JSON.stringify({p_name:d.get('name'),p_phone:d.get('phone'),p_company:null,p_sector:'عام',p_city:d.get('city'),p_need:d.get('need'),p_source:'blog/article',p_campaign:f.dataset.slug||'blog',p_consent:!!d.get('consent'),p_email:null})}).then(function(r){return r.ok?null:r.json()}).then(function(er){if(er){m.textContent=er.message||'تعذّر الإرسال';b.disabled=false;return}m.textContent='✅ وصلنا طلبك وسنتواصل معك قريباً';f.reset();b.disabled=false}).catch(function(){m.textContent='تعذّر الإرسال، حاول لاحقاً';b.disabled=false})})})})();`;
 
+// أي نقرة واتساب تحمل رسالة جاهزة تعرّفنا بمصدر العميل (الموقع والصفحة)
+const waLink = extra => `https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent('السلام عليكم، أتواصل معك من موقع تحالف' + (extra ? ' ' + extra : ''))}`;
+
 function layout({ title, desc, path: p, body, ld = [], type = 'website', h1, lead }) {
   const url = BASE + p;
   const fullTitle = title.includes(cfg.name) ? title : `${title} | ${cfg.name}`;
@@ -79,9 +82,9 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <div class="top"><div class="in"><a href="${BASE}/"><b>${esc(cfg.name)}</b></a><nav><a href="${BASE}/">الرئيسية</a><a href="${cfg.mainSite}/">تطبيق تحالف</a></nav></div></div>
 <header class="hero"><h1>${esc(h1)}</h1>${lead ? `<p>${esc(lead)}</p>` : ''}</header>
 <main>${body}</main>
-<a class="wafab" href="https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent('السلام عليكم، أرغب بالاستفسار عن خدمات تحالف')}" aria-label="واتساب">💬 واتساب</a>
+<a class="wafab" href="${waLink(`(مدونة تحالف، صفحة: ${h1}) وأرغب بالاستفسار عن خدماتكم`)}" aria-label="واتساب">💬 واتساب</a>
 <script>${FORM_JS}</script>
-<footer>© ${new Date().getFullYear()} ${esc(cfg.legalName || cfg.org)} · <a href="${cfg.mainSite}/">${cfg.mainSite.replace('https://', '')}</a> · <a href="${BASE}/rss.xml">RSS</a>${cfg.callPhone ? `<div style="margin:10px 0 6px;line-height:2"><strong>طرق التواصل:</strong> <a href="https://wa.me/${cfg.whatsapp}">واتساب (24 ساعة)</a> · <a href="tel:${cfg.callPhone}">اتصال ${esc(cfg.callPhone)} (من 7 صباحًا حتى 11 مساءً)</a> · <a href="${cfg.appUrl || cfg.mainSite}">تطبيق تحالف (24 ساعة)</a><br>وكلاء وموظفون يخدمونكم في معظم مدن المملكة</div>` : ''}${cfg.cr ? `<br><span style="font-size:12px;opacity:.85">السجل التجاري ${esc(cfg.cr)}${cfg.ecommerceCert ? ` · شهادة توثيق التجارة الإلكترونية ${esc(cfg.ecommerceCert)}` : ''} · ${esc(cfg.contactEmail || cfg.email)} · <a href="https://wa.me/${cfg.whatsapp}">واتساب</a><br>تحالف منصة تربط العملاء بأصحاب الناقلات والمعدات.</span>` : ''}</footer>
+<footer>© ${new Date().getFullYear()} ${esc(cfg.legalName || cfg.org)} · <a href="${cfg.mainSite}/">${cfg.mainSite.replace('https://', '')}</a> · <a href="${BASE}/rss.xml">RSS</a>${cfg.callPhone ? `<div style="margin:10px 0 6px;line-height:2"><strong>طرق التواصل:</strong> <a href="${waLink('(مدونة تحالف)')}">واتساب (24 ساعة)</a> · <a href="tel:${cfg.callPhone}">اتصال ${esc(cfg.callPhone)} (من 7 صباحًا حتى 11 مساءً)</a> · <a href="${cfg.appUrl || cfg.mainSite}">تطبيق تحالف (24 ساعة)</a><br>وكلاء وموظفون يخدمونكم في معظم مدن المملكة</div>` : ''}${cfg.cr ? `<br><span style="font-size:12px;opacity:.85">السجل التجاري ${esc(cfg.cr)}${cfg.ecommerceCert ? ` · شهادة توثيق التجارة الإلكترونية ${esc(cfg.ecommerceCert)}` : ''} · ${esc(cfg.contactEmail || cfg.email)} · <a href="${waLink('(مدونة تحالف)')}">واتساب</a><br>تحالف منصة تربط العملاء بأصحاب الناقلات والمعدات.</span>` : ''}</footer>
 </body></html>`;
 }
 
@@ -95,8 +98,8 @@ const wa = `https://wa.me/${cfg.whatsapp}`;
 
 const formHtml = slug => `<form class="lead" data-slug="${esc(slug)}"><input name="name" required placeholder="الاسم"><input name="phone" required inputmode="tel" placeholder="رقم الجوال (05xxxxxxxx)"><input name="city" placeholder="المدينة"><textarea name="need" rows="3" placeholder="ما الذي تحتاجه؟ (نقل معدات، تأجير كرين…)"></textarea><label><input type="checkbox" name="consent" required> أوافق على تواصل مؤسسة تحالف المتنقلة التجارية معي بخصوص خدماتها عبر الجوال، ويمكنني إلغاء الاشتراك في أي وقت.</label><button>اطلب عرض سعر</button><div class="msg" role="status"></div></form>`;
 const ctaFor = meta => {
-  const waText = `السلام عليكم، قرأت مقال «${meta.title}» وأرغب بعرض سعر`;
-  return `<div class="cta"><b>تحتاج نقل معدات أو تأجير معدات ثقيلة؟</b><br>اترك بياناتك ونتواصل معك بعرض سعر، أو راسلنا مباشرة على واتساب.${formHtml(meta.slug)}<a class="btn w" href="${wa}?text=${encodeURIComponent(waText)}">راسلنا على واتساب</a><a class="btn" href="${utm(cfg.mainSite + '/', meta.slug)}">افتح تطبيق تحالف</a><div class="links">${cityLinks(meta.slug)}</div></div>`;
+  const waHref = waLink(`(مدونة تحالف)، قرأت مقال «${meta.title}» وأرغب بعرض سعر`);
+  return `<div class="cta"><b>تحتاج نقل معدات أو تأجير معدات ثقيلة؟</b><br>اترك بياناتك ونتواصل معك بعرض سعر، أو راسلنا مباشرة على واتساب.${formHtml(meta.slug)}<a class="btn w" href="${waHref}">راسلنا على واتساب</a><a class="btn" href="${utm(cfg.mainSite + '/', meta.slug)}">افتح تطبيق تحالف</a><div class="links">${cityLinks(meta.slug)}</div></div>`;
 };
 
 for (const { meta, body } of posts) {
