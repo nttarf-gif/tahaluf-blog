@@ -1,0 +1,22 @@
+[
+  {"slug":"what-is-lowbed-and-when-needed","question":"ما هو اللوبد ومتى نحتاجه لنقل المعدات؟","keyword":"ما هو اللوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"lowbed-types-hydraulic-special-regular","question":"ما أنواع اللوبد: العادي والهيدروليك والسبيشل؟","keyword":"أنواع اللوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"choose-lowbed-for-excavator-weight-size","question":"كيف أختار اللوبد المناسب لحفار أو شيول من حيث الوزن والأبعاد؟","keyword":"لوبد لنقل حفار","category":"نقل المعدات","services":["transport"]},
+  {"slug":"what-carrier-needs-to-quote-equipment-transport","question":"ما المعلومات التي يطلبها الناقل لتسعير نقل معدة؟","keyword":"تسعير نقل معدات","category":"نقل المعدات","services":["transport"]},
+  {"slug":"permits-for-wide-or-tall-equipment-transport","question":"هل تحتاج المعدة العريضة أو العالية إلى تصريح نقل؟","keyword":"تصريح نقل معدات","category":"نقل المعدات","services":["transport"]},
+  {"slug":"inside-city-vs-intercity-equipment-transport","question":"ما الفرق بين نقل المعدات داخل المدينة وبين المدن؟","keyword":"نقل معدات بين المدن","category":"نقل المعدات","services":["transport"]},
+  {"slug":"how-equipment-is-secured-on-lowbed","question":"كيف تُثبَّت المعدة على اللوبد أثناء النقل؟","keyword":"تثبيت المعدات على اللوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"equipment-transport-insurance-what-to-ask","question":"ماذا تسأل عن التأمين قبل نقل معدة ثقيلة؟","keyword":"تأمين نقل المعدات","category":"نقل المعدات","services":["transport"]},
+  {"slug":"avoid-scams-booking-lowbed-online","question":"كيف أتجنب الاحتيال عند حجز لوبد عبر الإنترنت؟","keyword":"احتيال حجز لوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"loading-tracked-equipment-safely","question":"كيف تُحمَّل المعدات المجنزرة على اللوبد دون ضرر؟","keyword":"تحميل معدة مجنزرة","category":"نقل المعدات","services":["transport"]},
+  {"slug":"when-extra-axles-lowbed-needed","question":"متى تحتاج معدتك إلى لوبد بمحاور إضافية؟","keyword":"لوبد محاور","category":"نقل المعدات","services":["transport"]},
+  {"slug":"compare-two-equipment-transport-quotes","question":"كيف أقارن بين عرضين لنقل المعدات؟","keyword":"مقارنة عروض نقل معدات","category":"نقل المعدات","services":["transport"]},
+  {"slug":"documents-driver-and-cargo-should-carry","question":"ما الأوراق التي يُنصح بتجهيزها قبل نقل المعدة؟","keyword":"أوراق نقل المعدات","category":"نقل المعدات","services":["transport"]},
+  {"slug":"what-affects-lowbed-arrival-time","question":"ما الذي يؤثر على وقت وصول اللوبد إلى موقعك؟","keyword":"وقت وصول اللوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"broken-equipment-on-site-how-to-transport","question":"تعطلت معدة في الموقع: كيف تُنقل إلى الورشة؟","keyword":"نقل معدة معطلة","category":"نقل المعدات","services":["transport"]},
+  {"slug":"prepare-loading-site-before-lowbed-arrives","question":"كيف تجهّز موقع التحميل قبل وصول اللوبد؟","keyword":"تجهيز موقع التحميل","category":"نقل المعدات","services":["transport"]},
+  {"slug":"crane-vs-winch-vs-lowbed-difference","question":"ما الفرق بين الونش والرافعة واللوبد؟","keyword":"الفرق بين الونش واللوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"can-lowbed-carry-generators-and-site-cabins","question":"هل يصلح اللوبد لنقل المولدات والغرف الجاهزة؟","keyword":"نقل مولدات بلوبد","category":"نقل المعدات","services":["transport"]},
+  {"slug":"photo-document-equipment-condition-before-transport","question":"كيف توثّق حالة المعدة بالصور قبل النقل؟","keyword":"توثيق حالة المعدة","category":"نقل المعدات","services":["transport"]},
+  {"slug":"questions-to-ask-lowbed-driver-before-loading","question":"ما الأسئلة التي تطرحها على سائق اللوبد قبل التحميل؟","keyword":"سائق لوبد","category":"نقل المعدات","services":["transport"]}
+]
